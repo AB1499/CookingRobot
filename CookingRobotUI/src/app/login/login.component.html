@@ -1,0 +1,21 @@
+<form [formGroup]="loginForm" (submit)="login()" class="login-form">
+    <div>
+        <div class="mat-title">Sign in</div>        
+        <div>
+            <mat-form-field  color="primary" hideRequiredMarker>
+                <mat-label>User ID</mat-label>
+                <input matInput formControlName="userid" required>
+                <mat-error *ngIf="loginForm.controls.userid?.touched && loginForm.controls.userid?.invalid">
+                    <span *ngIf="loginForm.controls.userid?.errors.required">User ID is required</span>
+                </mat-error>
+            </mat-form-field>
+        </div>      
+    </div>
+    <div>
+        <button mat-raised-button color="accent" type="submit">Sign In</button><br>
+    </div>
+    <a [routerLink]="['/register']" href="">Don't have an account? Register</a>
+</form>
+
+
+

@@ -1,0 +1,42 @@
+<form [formGroup]="registerForm" (submit)="register()" class="register-form">
+    <div>
+        <div class="mat-title">Create account</div>
+        <div>
+            <mat-form-field color="primary" hideRequiredMarker>
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName" required> 
+                <mat-error *ngIf="registerForm.controls.firstName.touched && registerForm.controls.firstName.invalid">
+                    <span *ngIf="registerForm.controls.firstName.errors.required">First name is required</span>
+                </mat-error>
+            </mat-form-field> 
+            <mat-form-field color="primary" hideRequiredMarker>
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error *ngIf="registerForm.controls.lastName.touched && registerForm.controls.lastName.invalid">
+                    <span *ngIf="registerForm.controls.lastName.errors.required">Last name is required</span>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field  color="primary" hideRequiredMarker>
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" required>
+                <mat-error *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
+                    <span *ngIf="registerForm.controls.email.errors.email">Enter a valid email</span>
+                    <span *ngIf="registerForm.controls.email.errors.required">Email is required</span>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field  color="primary" hideRequiredMarker>
+                <mat-label>User ID</mat-label>
+                <input matInput formControlName="userid" required>
+                <mat-error *ngIf="registerForm.controls.userid.touched && registerForm.controls.userid.invalid">
+                    <span *ngIf="registerForm.controls.userid.errors.required">User ID is required</span>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <button mat-raised-button color="accent" type="submit">Register</button><br />
+    <a [routerLink]="['/login']" href="">Already have an account? Sign in</a>
+</form>
