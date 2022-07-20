@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Biriyani",
+        "ingredients": ["rice","masala","chicken"],
+        "cookingTime": "1 hr",
+        "utensils": ["bowl","pressure cooker","stirrer"]
+    },
+    {
+        "name": "Sambarrice",
+        "ingredients": ["Rice","masala","Daal"],
+        "cookingTime": "1 hr",
+        "utensils": ["bowl","pressure cooker","stirrer"]
+    },
+    {
+        "name": "Rasam",
+        "ingredients": ["rice","tamarind","curry leaves","Red chillies"],
+        "cookingTime":"30 mins",
+        "utensils":["bowl","cooking pot","stirrer"]
+    },
+    {
+        "name": "Daal fry",
+        "ingredients": ["Daal","masala"],
+        "cookingTime": "45 mins",
+        "utensils": ["kadhai", "Jhaara" ]
+    },
+    {
+        "name": "Idly",
+        "ingredients": ["rice","Daal","Vigna mungo","salt","Parboiled rice idly"],
+        "cookingTime": "45 mins",
+        "utensils":["wet grinder", "Idly Pot","Dosa Bhatti","Bain Marie"]
+    }
+]
