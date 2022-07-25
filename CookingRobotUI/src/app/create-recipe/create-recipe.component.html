@@ -1,0 +1,116 @@
+<form [formGroup]="createForm" (submit)="create()" class="create-form">
+    <div>
+        <div class="mat-title">Create a new recipe</div>
+        <div>
+            <mat-form-field color="primary" hideRequiredMarker>
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" required> 
+                <mat-error *ngIf="createForm.controls.name.touched && createForm.controls.name.invalid">
+                    <span *ngIf="createForm.controls.name.errors.required">Name is required</span>
+                </mat-error>
+            </mat-form-field>
+            <mat-checkbox formControlName="isVeg">Vegeterian</mat-checkbox>
+        </div>
+        <div>
+            <mat-form-field hideRequiredMarker color="primary">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" required></textarea>
+                <mat-error *ngIf="createForm.controls.description.touched && createForm.controls.description.invalid">
+                    <span *ngIf="createForm.controls.description.errors.required">Description is required</span>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field color="primary" hideRequiredMarker>
+                <mat-label>Cooking time</mat-label>
+                <input type="number" matInput formControlName="cookingTime" required> 
+                <mat-error *ngIf="createForm.controls.cookingTime.touched && createForm.controls.cookingTime.invalid">
+                    <span *ngIf="createForm.controls.cookingTime.errors.required">Cooking time is required</span>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <button mat-stroked-button color="primary" (click)="addStep()">Add step</button>
+
+    <!-- <button mat-raised-button color="primary" type="submit" (click)="addStep()">Add step</button><br /> -->
+
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel *ngFor="let step of steps; index as i">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Step {{i + 1}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{step.name}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+      
+          <div>
+            <mat-form-field>
+                <mat-label>Step name</mat-label>
+                <input matInput [(ngModel)]="step.name" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          
+            <mat-form-field>
+                <mat-label>Step cooking time (mins)</mat-label>
+                <input matInput type="number" [(ngModel)]="step.stepTimeTaken" min="0" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+
+            <mat-checkbox [(ngModel)]="step.isRobotStep" [ngModelOptions]="{standalone: true}">Is Robot step</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <input matInput [(ngModel)]="step.description" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+
+          <div mat-subheader>Ingredients</div>
+          <button mat-stroked-button color="primary" (click)="addIngredient(step)">Add ingredient</button>
+          <mat-list>
+            <mat-list-item *ngFor="let i of step.ingredients; index as in">
+                <div>
+                    {{in + 1}}
+                    <mat-form-field>
+                        <mat-label>Ingredient</mat-label>
+                        <input matInput [(ngModel)]="i.name" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                  
+                    <mat-form-field>
+                        <mat-label>Amount per serving</mat-label>
+                        <input matInput type="number" [(ngModel)]="i.amountPerServing" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Quantity unit</mat-label>
+                        <input matInput [(ngModel)]="i.quantityUnit" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                  </div>
+            </mat-list-item>
+          </mat-list>
+
+          <div mat-subheader>Utensils</div>
+          <div>
+            <mat-form-field class="example-chip-list" appearance="fill"  style="width: 70%;">
+                <mat-label>Add utensil</mat-label>
+                <mat-chip-list #chipList aria-label="Utensils">
+                  <mat-chip *ngFor="let utensil of step.utensils">
+                    {{utensil}}
+                  </mat-chip>
+                  <input placeholder="Bowl.."
+                         [matChipInputFor]="chipList"
+                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                         [matChipInputAddOnBlur]="addOnBlur"
+                         (matChipInputTokenEnd)="add(step, $event)">
+                </mat-chip-list>
+              </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <button mat-raised-button color="primary" type="submit" style="margin-right: 15px;">Create</button>
+    <button mat-stroked-button color="primary" type="submit" [routerLink]="['/home']">Cancel</button><br />
+    <!-- <button mat-raised-button color="accent">Cancel</button><br /> -->
+</form>

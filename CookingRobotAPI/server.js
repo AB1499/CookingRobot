@@ -17,7 +17,9 @@ app.use(cors({
 app.use(express.json())
 
 const usersRouter = require('./routes/users')
+const recipesRouter = require('./routes/recipes')
 
 app.use('/users', usersRouter)
+app.use('/recipes', recipesRouter)
 
 app.listen(3000, () => console.log('Server Started'))

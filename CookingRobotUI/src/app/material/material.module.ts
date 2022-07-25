@@ -22,6 +22,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSliderModule } from '@angular/material/slider';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
 
 const MaterialComponents = [
   MatButtonModule,
@@ -40,13 +43,15 @@ const MaterialComponents = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatRadioModule,
+  MatAutocompleteModule,
   MatExpansionModule,
   MatGridListModule,
   MatSnackBarModule,
   MatTableModule,
   MatDialogModule,
   MatSlideToggleModule,
-  MatChipsModule
+  MatChipsModule,
+  MatSliderModule
 ];
 
 @NgModule({

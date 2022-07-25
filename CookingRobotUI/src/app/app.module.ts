@@ -11,17 +11,26 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './route';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TitleComponent } from './title/title.component';
+import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
+import { CookRecipeComponent } from './cook-recipe/cook-recipe.component';
+import { RateRecipeComponent } from './rate-recipe/rate-recipe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    TitleComponent,
+    CreateRecipeComponent,
+    CookRecipeComponent,
+    RateRecipeComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
