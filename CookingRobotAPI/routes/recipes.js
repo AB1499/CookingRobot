@@ -28,7 +28,8 @@ router.post('/', async (req, res) => {
     isVeg: input.isVeg,
     cookingTime: input.cookingTime,
     userid: 'rnallam',
-    steps: input.steps
+    steps: input.steps,
+    description: input.description
   })
   try {
     const newRecipe = await recipe.save()
@@ -41,7 +42,7 @@ router.post('/', async (req, res) => {
 async function getRecipe(req, res, next) {
   let recipe
   try {
-    recipe = await User.find({ 'recipe': req.params.recipeid})
+    recipe = await Recipe.find({ '_id': req.params.recipeid})
     if (recipe == null) {
       return res.status(404).json({ message: 'Cannot find recipe' })
     }

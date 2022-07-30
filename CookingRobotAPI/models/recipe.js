@@ -51,7 +51,7 @@ const recipeSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: false
+    required: true
   },
   cookingTime: {
     type: String,

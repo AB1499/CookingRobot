@@ -1,1 +1,35 @@
-<p>cook-recipe works!</p>
+<div id="cook-page">
+  <div class="mat-title">Let's start cooking {{recipe.name}}</div>
+  <mat-form-field>
+    <mat-label>Number of servings</mat-label>
+    <input matInput type="number" min="1" [(ngModel)]="noOfServings">
+  </mat-form-field>
+  <mat-vertical-stepper [linear]="false" #stepper>
+      <mat-step *ngFor="let step of recipe.steps; let i = index">
+          <ng-template matStepLabel>{{step.name}}</ng-template>
+          <div class="mat-subtitle" style="font-weight: bold;">Requirements:</div>
+          Ingredients:
+          <ul>
+            <li *ngFor="let i of step.ingredients">{{i.name}} - {{i.amountPerServing * noOfServings}} {{i.quantityUnit}}</li>
+          </ul>
+          Utensils:
+          <ul>
+            <li *ngFor="let u of step.utensils">{{u}}</li>
+          </ul>
+          <div class="mat-subtitle" style="font-weight: bold;">Procedure:</div>
+          {{step.description}}
+          <div style="margin-top: 8px;" *ngIf="i !== 0 && i !== recipe.steps.length - 1">
+            <button style="margin-right: 4px;" mat-stroked-button color="accent" matStepperPrevious>Previous step</button>
+            <button mat-stroked-button color="primary" matStepperNext>Next step</button>
+          </div>
+          <div style="margin-top: 8px;" *ngIf="i === 0">
+            <button mat-stroked-button color="primary" matStepperNext>Next step</button>
+          </div>
+          <div style="margin-top: 8px;" *ngIf="i === recipe.steps.length - 1">
+            <button style="margin-right: 4px;" mat-stroked-button color="accent" matStepperPrevious>Previous step</button>
+            <button mat-stroked-button color="primary" (click)="openRatingDialog()">Rate recipe</button><br /><br />
+            <button mat-raised-button color="primary" (click)="goToRecipes()">Go to recipes</button>
+          </div>
+      </mat-step>
+  </mat-vertical-stepper>
+</div>

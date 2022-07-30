@@ -1,1 +1,22 @@
-<p>rate-recipe works!</p>
+<h2 mat-dialog-title>Add your rating</h2>
+<mat-dialog-content class="mat-typography">
+  <button mat-icon-button [color]="rating > 0 ? 'primary' : 'grey'" (click)="changeRating(1)" aria-label="Example icon button with a menu icon">
+    <mat-icon>star</mat-icon>
+  </button>
+  <button mat-icon-button [color]="rating > 1 ? 'primary' : 'grey'" (click)="changeRating(2)" aria-label="Example icon button with a menu icon">
+    <mat-icon>star</mat-icon>
+  </button>
+  <button mat-icon-button [color]="rating > 2 ? 'primary' : 'grey'" (click)="changeRating(3)" aria-label="Example icon button with a menu icon">
+    <mat-icon>star</mat-icon>
+  </button>
+  <button mat-icon-button [color]="rating > 3 ? 'primary' : 'grey'" (click)="changeRating(4)" aria-label="Example icon button with a menu icon">
+    <mat-icon>star</mat-icon>
+  </button>
+  <button mat-icon-button [color]="rating > 4 ? 'primary' : 'grey'" (click)="changeRating(5)" aria-label="Example icon button with a menu icon">
+    <mat-icon>star</mat-icon>
+  </button>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color="accent" mat-dialog-close>Close</button>
+  <button mat-stroked-button color="primary">Submit</button>
+</mat-dialog-actions>

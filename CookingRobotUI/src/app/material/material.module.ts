@@ -24,7 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const MaterialComponents = [
   MatButtonModule,
@@ -51,7 +52,9 @@ const MaterialComponents = [
   MatDialogModule,
   MatSlideToggleModule,
   MatChipsModule,
-  MatSliderModule
+  MatSliderModule,
+  MatStepperModule,
+  MatProgressBarModule
 ];
 
 @NgModule({

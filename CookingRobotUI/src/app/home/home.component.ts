@@ -59,6 +59,10 @@ export class HomeComponent implements OnInit {
   selectRecipe(recipe: RecipeData): void {
     this.selectedRecipe = this.recipes.find(r => r._id === recipe._id);
   }
+
+  cookRecipe(recipe: RecipeData): void {
+    this.router.navigate(['/cook', { id: this.selectedRecipe._id }]);
+  }
 }
 
 interface RecipeData {

@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RateRecipeComponent implements OnInit {
 
+  rating: number = 0;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  changeRating(rating: number) {
+    this.rating = rating;
+  }
 }
