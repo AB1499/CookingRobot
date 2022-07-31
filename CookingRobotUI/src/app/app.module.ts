@@ -16,6 +16,7 @@ import { TitleComponent } from './title/title.component';
 import { CreateRecipeComponent } from './create-recipe/create-recipe.component';
 import { CookRecipeComponent } from './cook-recipe/cook-recipe.component';
 import { RateRecipeComponent } from './rate-recipe/rate-recipe.component';
+import { AuthService } from './services/auth-service'
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { RateRecipeComponent } from './rate-recipe/rate-recipe.component';
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

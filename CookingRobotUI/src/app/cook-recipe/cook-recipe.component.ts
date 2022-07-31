@@ -46,7 +46,11 @@ export class CookRecipeComponent implements OnInit {
   }
 
   openRatingDialog(): void {
-    const dialogRef = this.dialog.open(RateRecipeComponent);
+    const dialogRef = this.dialog.open(RateRecipeComponent, {
+      data: {
+        recipeid: this.selectedId
+      },
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

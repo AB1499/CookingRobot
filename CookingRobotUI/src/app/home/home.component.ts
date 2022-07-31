@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Recipe } from '../create-recipe/create-recipe.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-home',
@@ -21,10 +22,10 @@ import { Recipe } from '../create-recipe/create-recipe.component';
 export class HomeComponent implements OnInit {
   CookingRobotAPIUrl: string;
   recipes: Array<Recipe>;
-  displayedColumns: string[] = ['name', 'description', 'isVeg', 'cookingTime', 'rating'];
+  displayedColumns: string[] = ['name', 'description', 'userid', 'isVeg', 'cookingTime', 'rating'];
   selectedRecipe: Recipe;
   recipeData: RecipeData[] = [];
-  dataSource: any;
+  dataSource: MatTableDataSource<any>;
 
   constructor(
     private router: Router, private http: HttpClient
@@ -47,13 +48,20 @@ export class HomeComponent implements OnInit {
           description: r.description,
           cookingTime: r.cookingTime,
           isVeg: r.isVeg,
+          userid: r.userid,
           rating: 0
         });
       });
-      this.dataSource = this.recipeData;
+      this.dataSource = new MatTableDataSource(this.recipeData);
+      // this.dataSource = this.recipeData;
     }, error => {
       console.log(error);
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   selectRecipe(recipe: RecipeData): void {
@@ -70,6 +78,7 @@ interface RecipeData {
   name: string;
   description: string;
   cookingTime?: number;
+  userid?: string;
   isVeg: boolean;
   rating: number;
 }

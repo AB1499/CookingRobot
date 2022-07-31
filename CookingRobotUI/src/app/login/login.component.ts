@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) { 
     this.CookingRobotAPIUrl = environment.CookingRobotAPIUrl;
   }
@@ -47,6 +49,7 @@ export class LoginComponent implements OnInit {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
         });
+        this.authService.login(response[0].userid, response[0].userid);
         this.router.navigate(['home']);
       }
       else {
