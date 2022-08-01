@@ -79,8 +79,10 @@
       <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="7">No results found</td>
       </tr>
-    </table>
-    
+  </table>
+
+
+  
   <div *ngIf="selectedRecipe">
     <mat-card>
       <mat-card-subtitle>{{selectedRecipe.cookingTime}} mins</mat-card-subtitle>
@@ -102,6 +104,13 @@
            target="_blank" rel="nofollow noopener" title="Share recipe">Share recipe</a>
       </mat-card-actions>
     </mat-card>
+  </div>
+
+  <div class="history-list" *ngIf="history.length > 0">
+    <b>Recently cooked recipes: </b>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let h of history">{{h.recipeid}}</mat-list-item>
+    </mat-list>
   </div>
   
 </div>

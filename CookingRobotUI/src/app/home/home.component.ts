@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   userid: string;
   ratings: Array<any>;
+  newHistory: any;
+  history: Array<any>;
 
   constructor(
     private router: Router, private http: HttpClient, private auth: AuthService
@@ -65,6 +67,13 @@ export class HomeComponent implements OnInit {
             });
         });
         this.dataSource = new MatTableDataSource(this.recipeData);
+
+        this.http.get(this.CookingRobotAPIUrl + 'histories/' + this.auth.userid)
+        .subscribe((response: Array<any>) => {
+          this.history = response.slice(0, 5);
+        }, error => {
+          console.log(error);
+        });
       }, error => {
         console.log(error);
       });
@@ -84,7 +93,17 @@ export class HomeComponent implements OnInit {
   }
 
   cookRecipe(recipe: RecipeData): void {
-    this.router.navigate(['/cook', { id: this.selectedRecipe._id }]);
+    this.newHistory = {
+      recipeid: this.selectedRecipe.name,
+      userid: this.auth.userid
+    };
+
+    this.http.post(this.CookingRobotAPIUrl + 'histories', this.newHistory)
+    .subscribe((response) => {
+      this.router.navigate(['/cook', { id: this.selectedRecipe._id }]);
+    }, error => {
+      console.log(error);
+    });
   }
 
   addRatings(id: string): string {
