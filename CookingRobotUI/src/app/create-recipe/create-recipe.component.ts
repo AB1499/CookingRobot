@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'app-create-recipe',
@@ -23,22 +24,28 @@ export class CreateRecipeComponent implements OnInit {
   steps: Array<Step>;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   addOnBlur = true;
+  userid: string;
 
   constructor(
     private formBuilder: FormBuilder,
+    private auth: AuthService,
     private snackBar: MatSnackBar,
     private http: HttpClient,
+    private authService: AuthService,
     private router: Router
   ) { 
     this.CookingRobotAPIUrl = environment.CookingRobotAPIUrl;
     this.steps = [ this.getNewStep() ]; 
+    this.userid = this.authService.id;
+    if(!this.userid)
+      this.router.navigate(['login']);
   }
 
   ngOnInit(): void {
     this.createForm = this.formBuilder.group({
       name: [null, Validators.required],
       description: [null, Validators.required],
-      isVeg: [null],
+      isVeg: [false],
       cookingTime: [null, Validators.required]
     });
   }
@@ -60,7 +67,7 @@ export class CreateRecipeComponent implements OnInit {
       description: this.createForm.value.description,
       cookingTime: this.createForm.value.cookingTime,
       isVeg: this.createForm.value.isVeg,
-      userid: '',
+      userid: this.auth.userid,
       steps: this.steps
     };
 
@@ -99,9 +106,9 @@ export class CreateRecipeComponent implements OnInit {
 
   getNewIngredient(): Ingredient {
     return {
-      name: '',
+      name: 'Ingredient name',
       amountPerServing: 0,
-      quantityUnit: ''
+      quantityUnit: 'g'
     };
   }
 
@@ -121,7 +128,6 @@ export class CreateRecipeComponent implements OnInit {
       step.utensils.push(value);
     }
 
-    // Clear the input value
     // Clear the input value
     if (event.input) {
       event.input.value = '';

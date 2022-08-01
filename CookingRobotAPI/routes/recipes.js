@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     name: input.name,
     isVeg: input.isVeg,
     cookingTime: input.cookingTime,
-    userid: 'rnallam',
+    userid: input.userid,
     steps: input.steps,
     description: input.description
   })

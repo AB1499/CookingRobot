@@ -23,7 +23,7 @@
         <div>
             <mat-form-field color="primary" hideRequiredMarker>
                 <mat-label>Cooking time</mat-label>
-                <input type="number" matInput formControlName="cookingTime" required> 
+                <input type="number" min="1" matInput formControlName="cookingTime" required> 
                 <mat-error *ngIf="createForm.controls.cookingTime.touched && createForm.controls.cookingTime.invalid">
                     <span *ngIf="createForm.controls.cookingTime.errors.required">Cooking time is required</span>
                 </mat-error>
@@ -80,7 +80,7 @@
                   
                     <mat-form-field>
                         <mat-label>Amount per serving</mat-label>
-                        <input matInput type="number" [(ngModel)]="i.amountPerServing" [ngModelOptions]="{standalone: true}">
+                        <input matInput type="number" min="0" [(ngModel)]="i.amountPerServing" [ngModelOptions]="{standalone: true}">
                     </mat-form-field>
 
                     <mat-form-field>

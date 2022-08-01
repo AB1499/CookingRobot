@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Recipe } from '../create-recipe/create-recipe.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'app-home',
@@ -26,11 +27,16 @@ export class HomeComponent implements OnInit {
   selectedRecipe: Recipe;
   recipeData: RecipeData[] = [];
   dataSource: MatTableDataSource<any>;
+  userid: string;
+  ratings: Array<any>;
 
   constructor(
-    private router: Router, private http: HttpClient
+    private router: Router, private http: HttpClient, private auth: AuthService
   ) { 
     this.CookingRobotAPIUrl = environment.CookingRobotAPIUrl;
+    this.userid = this.auth.id;
+    if(!this.userid)
+      this.router.navigate(['login']);
   }
 
   ngOnInit(): void {
@@ -38,22 +44,31 @@ export class HomeComponent implements OnInit {
   }
 
   loadPage(): void {
-    this.http.get(this.CookingRobotAPIUrl + 'recipes')
+
+    this.http.get(this.CookingRobotAPIUrl + 'ratings')
     .subscribe((response: Array<any>) => {
-      this.recipes = response;
-      response.forEach(r => {
-        this.recipeData.push({
-          _id: r._id,
-          name: r.name,
-          description: r.description,
-          cookingTime: r.cookingTime,
-          isVeg: r.isVeg,
-          userid: r.userid,
-          rating: 0
+      this.ratings = response;
+
+      this.http.get(this.CookingRobotAPIUrl + 'recipes')
+      .subscribe((response: Array<any>) => {
+        this.recipes = response;
+        response.forEach(r => {
+          if(r.userid == '' || r.userid == this.auth.userid)
+            this.recipeData.push({
+              _id: r._id,
+              name: r.name,
+              description: r.description,
+              cookingTime: r.cookingTime,
+              isVeg: r.isVeg,
+              userid: r.userid,
+              rating: this.addRatings(r._id, )
+            });
         });
+        this.dataSource = new MatTableDataSource(this.recipeData);
+      }, error => {
+        console.log(error);
       });
-      this.dataSource = new MatTableDataSource(this.recipeData);
-      // this.dataSource = this.recipeData;
+
     }, error => {
       console.log(error);
     });
@@ -71,6 +86,19 @@ export class HomeComponent implements OnInit {
   cookRecipe(recipe: RecipeData): void {
     this.router.navigate(['/cook', { id: this.selectedRecipe._id }]);
   }
+
+  addRatings(id: string): string {
+    let count = 0;
+    let sum = 0;
+    this.ratings.forEach(r => {
+      if(r.recipeid == id) {
+        sum = sum + r.rating;
+        count++;
+      }
+    });
+
+    return count > 0 ? (sum / count).toFixed(2) : '--';
+  }
 }
 
 interface RecipeData {
@@ -80,5 +108,5 @@ interface RecipeData {
   cookingTime?: number;
   userid?: string;
   isVeg: boolean;
-  rating: number;
+  rating: string;
 }

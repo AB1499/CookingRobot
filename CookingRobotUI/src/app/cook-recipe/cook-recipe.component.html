@@ -23,10 +23,10 @@
             <button mat-stroked-button color="primary" matStepperNext>Next step</button>
           </div>
           <div style="margin-top: 8px;" *ngIf="i === 0">
-            <button mat-stroked-button color="primary" matStepperNext>Next step</button>
+            <button mat-stroked-button color="primary" *ngIf="recipe.steps.length > 1" matStepperNext>Next step</button>
           </div>
           <div style="margin-top: 8px;" *ngIf="i === recipe.steps.length - 1">
-            <button style="margin-right: 4px;" mat-stroked-button color="accent" matStepperPrevious>Previous step</button>
+            <button style="margin-right: 4px;" mat-stroked-button color="accent" *ngIf="recipe.steps.length > 1" matStepperPrevious>Previous step</button>
             <button mat-stroked-button color="primary" (click)="openRatingDialog()">Rate recipe</button><br /><br />
             <button mat-raised-button color="primary" (click)="goToRecipes()">Go to recipes</button>
           </div>
