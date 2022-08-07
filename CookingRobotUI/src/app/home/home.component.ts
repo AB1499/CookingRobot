@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   history: Array<any>;
 
   constructor(
-    private router: Router, private http: HttpClient, private auth: AuthService
+    private router: Router, private http: HttpClient, public auth: AuthService
   ) { 
     this.CookingRobotAPIUrl = environment.CookingRobotAPIUrl;
     this.userid = this.auth.id;
@@ -117,6 +117,21 @@ export class HomeComponent implements OnInit {
     });
 
     return count > 0 ? (sum / count).toFixed(2) : '--';
+  }
+
+  deleteRecipe(): void {
+    this.http.delete(this.CookingRobotAPIUrl + 'recipes/' + this.selectedRecipe._id)
+    .subscribe((response) => {
+      this.selectedRecipe = null;
+      this.recipeData = [];
+      this.loadPage();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  editRecipe(): void {
+    this.router.navigate(['create', { id: this.selectedRecipe._id, editMode: true }]);
   }
 }
 

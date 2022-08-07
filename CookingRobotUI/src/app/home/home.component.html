@@ -1,25 +1,5 @@
-<!-- <div style="display: flex;">
-    <div *ngFor="let recipe of recipes" class="recipe-card">
-        <mat-card>
-            <mat-card-subtitle>{{recipe.cookingTime}}</mat-card-subtitle>
-            <mat-card-title>{{recipe.name}}</mat-card-title>
-            <mat-card-content>
-                <div>Ingredients: 
-                    <div *ngFor="let i of recipe.ingredients">
-                        {{i}}
-                    </div>
-                </div>
-            </mat-card-content>
-            <mat-divider inset></mat-divider>
-            <mat-card-actions>
-                <button mat-button>Start cooking</button>
-                <button mat-button>Share</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
-</div> -->
 <div class="recipe-grid">
-  <button mat-raised-button color="primary" class="recipe-toolbar" [routerLink]="['/create']">Add recipe</button> <br />
+  <button mat-raised-button color="primary" class="recipe-toolbar" [routerLink]="['/create', { editMode: false}]">Add recipe</button> <br />
 
   <mat-form-field style="margin-top: 16px;">
     <mat-label>Search recipes</mat-label>
@@ -89,6 +69,7 @@
       <mat-card-title>{{selectedRecipe.name}}
         <mat-icon *ngIf="selectedRecipe.isVeg" style="color: green; font-size: medium;">check_circle</mat-icon>
         <mat-icon *ngIf="!selectedRecipe.isVeg" style="color: red; font-size: medium;">check_circle</mat-icon>
+        
       </mat-card-title>
       <mat-card-content>
           <div><b>Steps: </b>
@@ -102,6 +83,12 @@
           <button mat-button mat-stroked-button (click)="cookRecipe()">Start cooking</button>
           <a style="margin-left: 8px;" href="https://mail.google.com/mail/u/0/?view=cm&amp;fs=1&amp;tf=1&amp;source=mailto&amp;to=someone@gmail.com&amp;title=Hello&amp;subject=Cooking robot recipe&amp;body=Hey there! Check out this wonderful recipe in cooking robot app - {{selectedRecipe.name}}"
            target="_blank" rel="nofollow noopener" title="Share recipe">Share recipe</a>
+           <button *ngIf="selectedRecipe.userid == auth.userid" style="margin-left: auto;" mat-icon-button color="primary" aria-label="Edit recipe" (click)="editRecipe()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button *ngIf="selectedRecipe.userid == auth.userid" style="margin-left: auto;" mat-icon-button color="primary" aria-label="Delete recipe" (click)="deleteRecipe()">
+            <mat-icon>delete</mat-icon>
+          </button>
       </mat-card-actions>
     </mat-card>
   </div>

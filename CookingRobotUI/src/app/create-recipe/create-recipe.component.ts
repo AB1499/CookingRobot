@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -25,6 +25,9 @@ export class CreateRecipeComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   addOnBlur = true;
   userid: string;
+  isEditMode: boolean = false;
+  selectedId: string;
+  recipeName: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,22 +35,47 @@ export class CreateRecipeComponent implements OnInit {
     private snackBar: MatSnackBar,
     private http: HttpClient,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { 
     this.CookingRobotAPIUrl = environment.CookingRobotAPIUrl;
     this.steps = [ this.getNewStep() ]; 
     this.userid = this.authService.id;
     if(!this.userid)
       this.router.navigate(['login']);
+
+    this.isEditMode = this.route.snapshot.paramMap.get('editMode') == "true" ? true : false;
+    this.selectedId = this.route.snapshot.paramMap.get('id');
+
+    if(this.isEditMode)
+    {
+      this.http.get(this.CookingRobotAPIUrl + 'recipes/' + this.selectedId)
+      .subscribe((response) => {
+        let recipe = response[0];
+        this.recipeName = recipe.name;
+        this.createForm = this.formBuilder.group({
+          name: [recipe.name, Validators.required],
+          description: [recipe.description, Validators.required],
+          isVeg: [recipe.isVeg],
+          cookingTime: [Number(recipe.cookingTime), Validators.required]
+        });
+        this.steps = recipe.steps;
+      }, error => {
+        console.log(error);
+      });
+    }
+    else 
+    {
+      this.createForm = this.formBuilder.group({
+        name: [null, Validators.required],
+        description: [null, Validators.required],
+        isVeg: [false],
+        cookingTime: [null, Validators.required]
+      });
+    }
   }
 
   ngOnInit(): void {
-    this.createForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      description: [null, Validators.required],
-      isVeg: [false],
-      cookingTime: [null, Validators.required]
-    });
   }
 
   create(): void {
@@ -90,6 +118,43 @@ export class CreateRecipeComponent implements OnInit {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
         });
+    });
+  }
+
+  update(): void {
+    this.http.delete(this.CookingRobotAPIUrl + 'recipes/' + this.selectedId)
+    .subscribe((response) => {
+      this.newRecipe = {
+        name: this.createForm.value.name,
+        description: this.createForm.value.description,
+        cookingTime: this.createForm.value.cookingTime,
+        isVeg: this.createForm.value.isVeg,
+        userid: this.auth.userid,
+        steps: this.steps
+      };
+  
+      this.http.post(this.CookingRobotAPIUrl + 'recipes', this.newRecipe)
+      .subscribe((response) => {
+        this.snackBar.open('Updated recipe', '',
+          {
+            duration: 2000,
+            panelClass: ['my-snackbar'],
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        this.router.navigate(['home']);
+      }, error => {
+        console.log(error);
+        this.snackBar.open('Please fill all valid recipe details', '',
+          {
+            duration: 3000,
+            panelClass: ['my-snackbar'],
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+      });
+    }, error => {
+      console.log(error);
     });
   }
 

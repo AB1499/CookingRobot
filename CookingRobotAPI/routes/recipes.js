@@ -19,6 +19,11 @@ router.get('/:recipeid', getRecipe, (req, res) => {
   res.json(res.recipe)
 })
 
+// Deleting One
+router.delete('/:recipeid', deleteRecipe, (req, res) => {
+  res.json(res.recipe)
+})
+
 // Creating one
 router.post('/', async (req, res) => {
   const input = req.body;
@@ -43,6 +48,21 @@ async function getRecipe(req, res, next) {
   let recipe
   try {
     recipe = await Recipe.find({ '_id': req.params.recipeid})
+    if (recipe == null) {
+      return res.status(404).json({ message: 'Cannot find recipe' })
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message })
+  }
+
+  res.recipe = recipe
+  next()
+}
+
+async function deleteRecipe(req, res, next) {
+  let recipe
+  try {
+    recipe = await Recipe.findOneAndDelete({ '_id': req.params.recipeid})
     if (recipe == null) {
       return res.status(404).json({ message: 'Cannot find recipe' })
     }
