@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const Rating = require('../models/rating')
+const db = require('../_helpers/db');
+const Rating = db.Rating;
 
 // Getting all
 router.get('/', async (req, res) => {

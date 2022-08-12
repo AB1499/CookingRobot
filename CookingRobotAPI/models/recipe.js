@@ -59,7 +59,7 @@ const recipeSchema = new mongoose.Schema({
   },
   userid:{
     type: String,
-    required: true
+    required: false
   },
   isVeg: {
     type: Boolean,

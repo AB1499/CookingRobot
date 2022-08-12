@@ -49,7 +49,7 @@ export class CreateRecipeComponent implements OnInit {
 
     if(this.isEditMode)
     {
-      this.http.get(this.CookingRobotAPIUrl + 'recipes/' + this.selectedId)
+      this.http.get(config.apiUrl + 'recipes/' + this.selectedId)
       .subscribe((response) => {
         let recipe = response[0];
         this.recipeName = recipe.name;
@@ -99,7 +99,7 @@ export class CreateRecipeComponent implements OnInit {
       steps: this.steps
     };
 
-    this.http.post(this.CookingRobotAPIUrl + 'recipes', this.newRecipe)
+    this.http.post(config.apiUrl + 'recipes', this.newRecipe)
     .subscribe((response) => {
       this.snackBar.open('Added recipe', '',
         {
@@ -122,7 +122,7 @@ export class CreateRecipeComponent implements OnInit {
   }
 
   update(): void {
-    this.http.delete(this.CookingRobotAPIUrl + 'recipes/' + this.selectedId)
+    this.http.delete(config.apiUrl + 'recipes/' + this.selectedId)
     .subscribe((response) => {
       this.newRecipe = {
         name: this.createForm.value.name,
@@ -133,7 +133,7 @@ export class CreateRecipeComponent implements OnInit {
         steps: this.steps
       };
   
-      this.http.post(this.CookingRobotAPIUrl + 'recipes', this.newRecipe)
+      this.http.post(config.apiUrl + 'recipes', this.newRecipe)
       .subscribe((response) => {
         this.snackBar.open('Updated recipe', '',
           {

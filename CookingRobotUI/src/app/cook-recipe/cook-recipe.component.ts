@@ -33,7 +33,7 @@ export class CookRecipeComponent implements OnInit {
   }
 
   loadPage(): void {
-    this.http.get(this.CookingRobotAPIUrl + 'recipes/' + this.selectedId)
+    this.http.get(config.apiUrl + 'recipes/' + this.selectedId)
     .subscribe((response: Array<any>) => {
       this.recipe = response[0];
     }, error => {

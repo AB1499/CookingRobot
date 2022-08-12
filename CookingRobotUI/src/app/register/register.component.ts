@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.http.post(this.CookingRobotAPIUrl + 'users', this.registerForm.value)
+    this.http.post(config.apiUrl + 'users', this.registerForm.value)
     .subscribe((response) => {
       this.snackBar.open('Registration successful', '',
         {

@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const Recipe = require('../models/recipe')
-const Step = require('../models/recipe')
-const Ingredient = require('../models/recipe')
+const db = require('../_helpers/db');
+const Recipe = db.Recipe;
+const Ingredient = db.Ingredient;
+const Step = db.Step;
+
 
 // Getting all
 router.get('/', async (req, res) => {
