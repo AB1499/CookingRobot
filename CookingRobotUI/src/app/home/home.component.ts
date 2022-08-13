@@ -47,11 +47,11 @@ export class HomeComponent implements OnInit {
 
   loadPage(): void {
 
-    this.http.get(config.apiUrl + 'ratings')
+    this.http.get('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'ratings')
     .subscribe((response: Array<any>) => {
       this.ratings = response;
 
-      this.http.get(config.apiUrl + 'recipes')
+      this.http.get('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'recipes')
       .subscribe((response: Array<any>) => {
         this.recipes = response;
         response.forEach(r => {
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
         });
         this.dataSource = new MatTableDataSource(this.recipeData);
 
-        this.http.get(config.apiUrl + 'histories/' + this.auth.userid)
+        this.http.get('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'histories/' + this.auth.userid)
         .subscribe((response: Array<any>) => {
           this.history = response.slice(0, 5);
         }, error => {
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
       userid: this.auth.userid
     };
 
-    this.http.post(config.apiUrl + 'histories', this.newHistory)
+    this.http.post('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'histories', this.newHistory)
     .subscribe((response) => {
       this.router.navigate(['/cook', { id: this.selectedRecipe._id }]);
     }, error => {
@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit {
   }
 
   deleteRecipe(): void {
-    this.http.delete(config.apiUrl + 'recipes/' + this.selectedRecipe._id)
+    this.http.delete('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'recipes/' + this.selectedRecipe._id)
     .subscribe((response) => {
       this.selectedRecipe = null;
       this.recipeData = [];

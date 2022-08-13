@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.http.get(this.CookingRobotAPIUrl + `users/${this.loginForm.value.userid}`)
+    this.http.get('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + `users/${this.loginForm.value.userid}`)
     .subscribe((response: Array<any>) => {
       if(response.length > 0) {
         this.snackBar.open('Login successful', '',

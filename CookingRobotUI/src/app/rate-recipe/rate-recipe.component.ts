@@ -42,7 +42,7 @@ export class RateRecipeComponent implements OnInit {
       recipeid: this.recipeid,
       userid: this.userid
     };
-    this.http.post(config.apiUrl + 'ratings', newRating)
+    this.http.post('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'ratings', newRating)
     .subscribe((response) => {
       
     }, error => {

@@ -33,7 +33,7 @@ export class CookRecipeComponent implements OnInit {
   }
 
   loadPage(): void {
-    this.http.get(config.apiUrl + 'recipes/' + this.selectedId)
+    this.http.get('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'recipes/' + this.selectedId)
     .subscribe((response: Array<any>) => {
       this.recipe = response[0];
     }, error => {

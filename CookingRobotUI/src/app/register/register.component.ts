@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.http.post(config.apiUrl + 'users', this.registerForm.value)
+    this.http.post('http://ec2-50-16-143-51.compute-1.amazonaws.com/api/' + 'users', this.registerForm.value)
     .subscribe((response) => {
       this.snackBar.open('Registration successful', '',
         {
